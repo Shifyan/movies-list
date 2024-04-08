@@ -8,6 +8,9 @@ export default function MoviesList() {
         <MoviesCard />
         <MoviesCard />
         <MoviesCard />
+        <MoviesCard />
+        <MoviesCard />
+        <MoviesCard />
       </div>
     </>
   );

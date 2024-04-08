@@ -1,7 +1,10 @@
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
+// import { useState } from "react";
 import MoviesList from "./components/list";
+
 function App() {
+  // const [list,setList] = useState(listMovie)
   return (
     <>
       <div className="m-5 p-5 bg-slate-700 rounded-md text-white">
