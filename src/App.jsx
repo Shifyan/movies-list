@@ -1,23 +1,16 @@
+/* eslint-disable no-unused-vars */
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
-// import { useState } from "react";
+import { useState, useEffect } from "react";
 import MoviesList from "./components/list";
-const options = {
-  method: "GET",
-  headers: {
-    accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZmEwN2MxODdmOTExZDEyMjVjOGFjNDk0Y2E2NzJmZCIsInN1YiI6IjY2MTQyM2NhOGVlMGE5MDE3ZWE0NWU3ZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.N4W8_-e92UPTvrQt6CcWp0LVYWCt7Dc6SeEc3KN7-bA",
-  },
-};
-
-const res = await fetch(
-  "https://api.themoviedb.org/3/trending/movie/week?language=en-US",
-  options
-).then((response) => response.json());
-let dataFilm = res.results;
+import getMovies from "./utils/datafilm";
+import getGenres from "./utils/dataGenre";
+import Footer from "./components/footer";
+const genres = await getGenres();
+const myMovies = await getMovies();
+console.log(genres);
 function App() {
-  // const [list,setList] = useState(listMovie)
+  const [moviesList, setMoviesList] = useState(myMovies);
   return (
     <>
       <div className="m-5 p-5 bg-slate-700 rounded-md text-white">
@@ -32,14 +25,10 @@ function App() {
           </button>
         </div>
         <div>
-          <MoviesList data={dataFilm} />
-          <ol>
-            {dataFilm.map((e, i) => {
-              return <li key={i}>{e.original_title}</li>;
-            })}
-          </ol>
+          <MoviesList moviesList={moviesList} />
         </div>
       </div>
+      <Footer />
     </>
   );
 }
