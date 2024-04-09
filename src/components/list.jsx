@@ -2,10 +2,9 @@
 import MoviesCard from "./card";
 
 export default function MoviesList({ moviesList }) {
-  console.log(moviesList);
   return (
     <>
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-5 gap-3 my-20">
         {moviesList.map((v, i) => {
           return (
             <MoviesCard

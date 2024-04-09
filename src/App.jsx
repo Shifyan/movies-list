@@ -4,17 +4,16 @@
 import { useState, useEffect } from "react";
 import MoviesList from "./components/list";
 import getMovies from "./utils/datafilm";
-import getGenres from "./utils/dataGenre";
 import Footer from "./components/footer";
-const genres = await getGenres();
 const myMovies = await getMovies();
-console.log(genres);
 function App() {
   const [moviesList, setMoviesList] = useState(myMovies);
   return (
     <>
       <div className="m-5 p-5 bg-slate-700 rounded-md text-white">
-        <h1 className="text-4xl font-bold">My Movies List</h1>
+        <div className="flex justify-center">
+          <h1 className="text-4xl font-bold">My Movies List</h1>
+        </div>
         <div className="flex justify-center my-8">
           <input
             type="text"
