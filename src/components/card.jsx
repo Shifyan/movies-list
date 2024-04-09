@@ -20,9 +20,15 @@ export default function MoviesCard({ image, title, year, genre_id }) {
   });
 
   // Mengubah format tanggal
-  const tanggal = format(parseISO(year), "dd MMMM yyyy", {
-    locale: id,
-  });
+  let tanggal;
+  if (year !== "") {
+    tanggal = format(parseISO(year), "dd MMMM yyyy", {
+      locale: id,
+    });
+  } else if (year === "") {
+    tanggal = "Tanggal Rilis Tidak Ditemukan";
+  }
+
   return (
     <>
       <div className="bg-slate-800 rounded-lg">

@@ -1,5 +1,5 @@
 import axios from "axios";
-function searchMovies(myQuery) {
+async function searchMovies(myQuery) {
   const options = {
     method: "GET",
     url: "https://api.themoviedb.org/3/search/movie",
@@ -11,16 +11,8 @@ function searchMovies(myQuery) {
     },
   };
 
-  axios
-    .request(options)
-    .then(function (response) {
-      const res = response.data.results;
-      console.log(res);
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
+  const res = await axios.request(options);
+  return res.data.results;
 }
-const tiger = searchMovies("tiger");
-console.log(tiger);
+
 export default searchMovies;

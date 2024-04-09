@@ -12,17 +12,19 @@ function App() {
   const [moviesList, setMoviesList] = useState(myMovies);
   const [search, setSearch] = useState("");
   const [searchReturn, setSearchReturn] = useState([]);
-  function handleInputeChange(event) {
+
+  const handleInputChange = (event) => {
     setSearch(event.target.value);
-  }
+  };
 
   const toSearch = async () => {
     if (search.length !== 0) {
-      const hasilSearch = await searchMovies(search);
-      console.log(hasilSearch);
+      const res = await searchMovies(search);
+      setSearchReturn(res);
+      console.log(searchReturn);
     }
   };
-  // console.log(search);
+
   return (
     <>
       <div className="m-5 p-5 bg-slate-700 rounded-md text-white">
@@ -34,7 +36,7 @@ function App() {
             type="text"
             className="text-black p-2 mx-5 rounded w-[30rem]"
             value={search}
-            onChange={handleInputeChange}
+            onChange={handleInputChange}
             required
           />
           <button
@@ -45,7 +47,11 @@ function App() {
           </button>
         </div>
         <div>
-          <MoviesList moviesList={moviesList} />
+          {searchReturn.length !== 0 ? (
+            <MoviesList moviesList={searchReturn} />
+          ) : (
+            <MoviesList moviesList={moviesList} />
+          )}
         </div>
       </div>
       <Footer />
