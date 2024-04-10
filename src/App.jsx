@@ -1,17 +1,25 @@
-/* eslint-disable no-unused-vars */
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
 import { useState, useEffect } from "react";
 import MoviesList from "./components/list";
+import Loading from "./components/loading";
 import getMovies from "./utils/datafilm";
 import Footer from "./components/footer";
 import searchMovies from "./utils/searchMovies";
 
-const myMovies = await getMovies();
 function App() {
-  const [moviesList, setMoviesList] = useState(myMovies);
+  const [moviesList, setMoviesList] = useState([]);
   const [search, setSearch] = useState("");
   const [searchReturn, setSearchReturn] = useState([]);
+  const [loading, setLoading] = useState(false); // State untuk menampilkan loading
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true); // Tampilkan loading saat mulai fetching data
+      const data = await getMovies();
+      setMoviesList(data);
+      setLoading(false); // Sembunyikan loading setelah selesai fetching data
+    };
+    fetchData();
+  }, []);
 
   const handleInputChange = (event) => {
     setSearch(event.target.value);
@@ -19,9 +27,10 @@ function App() {
 
   const toSearch = async () => {
     if (search.length !== 0) {
+      setLoading(true); // Tampilkan loading saat mulai pencarian
       const res = await searchMovies(search);
       setSearchReturn(res);
-      console.log(searchReturn);
+      setLoading(false); // Sembunyikan loading setelah selesai pencarian
     }
   };
 
@@ -47,7 +56,9 @@ function App() {
           </button>
         </div>
         <div>
-          {searchReturn.length !== 0 ? (
+          {loading ? ( // Tampilkan loading jika loading true
+            <Loading />
+          ) : searchReturn.length !== 0 ? (
             <MoviesList moviesList={searchReturn} />
           ) : (
             <MoviesList moviesList={moviesList} />
