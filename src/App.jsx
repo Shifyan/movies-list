@@ -19,6 +19,7 @@ function App() {
       setLoading(false); // Sembunyikan loading setelah selesai fetching data
     };
     fetchData();
+    // alert("Web ini mengambil data dari Database TMDB Secara Resmi!");
   }, []);
 
   const handleInputChange = (event) => {
@@ -34,11 +35,21 @@ function App() {
     }
   };
 
+  const toGetMovie = () => {
+    setLoading(true); // Tampilkan loading saat mulai pencarian
+    setSearchReturn([]);
+    setTimeout(() => {
+      setLoading(false); // Sembunyikan loading setelah jeda
+    }, 500);
+  };
+
   return (
     <>
       <div className="m-5 p-5 bg-slate-700 rounded-md text-white">
         <div className="flex justify-center">
-          <h1 className="text-4xl font-bold">My Movies List</h1>
+          <button onClick={toGetMovie} className="text-4xl font-bold">
+            My Movies List
+          </button>
         </div>
         <div className="flex justify-center my-8">
           <input
@@ -65,7 +76,13 @@ function App() {
           )}
         </div>
       </div>
-      <Footer />
+      {loading ? (
+        <div></div>
+      ) : (
+        <div>
+          <Footer />
+        </div>
+      )}
     </>
   );
 }
