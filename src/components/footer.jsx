@@ -1,8 +1,8 @@
 export default function Footer() {
   return (
     <>
-      <div className=" mt-10 items-center  bg-slate-500 rounded-t text-white text-md font-medium">
-        <div className="py-2">
+      <div className=" mt-10 items-center  bg-slate-700 rounded-t text-white text-sm md:text-base font-medium">
+        <div className="py-4">
           <div className="flex justify-center">
             <h1>
               Dev by{" "}

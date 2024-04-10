@@ -4,7 +4,7 @@ import MoviesCard from "./card";
 export default function MoviesList({ moviesList }) {
   return (
     <>
-      <div className="grid grid-cols-4 gap-5 my-20">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 my-10 md:my-20">
         {moviesList.map((v, i) => {
           return (
             <MoviesCard

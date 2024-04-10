@@ -5,21 +5,24 @@ import getMovies from "./utils/datafilm";
 import Footer from "./components/footer";
 import searchMovies from "./utils/searchMovies";
 
+const kataDilarang = ["porn", "sex", "nude", "kill"];
+
 function App() {
   const [moviesList, setMoviesList] = useState([]);
   const [search, setSearch] = useState("");
   const [searchReturn, setSearchReturn] = useState([]);
-  const [loading, setLoading] = useState(false); // State untuk menampilkan loading
+  const [loading, setLoading] = useState(false);
+  const [myErrors, setMyErrors] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
+      setMyErrors("");
       setLoading(true); // Tampilkan loading saat mulai fetching data
       const data = await getMovies();
       setMoviesList(data);
       setLoading(false); // Sembunyikan loading setelah selesai fetching data
     };
     fetchData();
-    // alert("Web ini mengambil data dari Database TMDB Secara Resmi!");
   }, []);
 
   const handleInputChange = (event) => {
@@ -27,11 +30,24 @@ function App() {
   };
 
   const toSearch = async () => {
+    setMyErrors("");
     if (search.length !== 0) {
-      setLoading(true); // Tampilkan loading saat mulai pencarian
+      const kataDitemukan = kataDilarang.filter((kata) =>
+        search.includes(kata)
+      );
+      if (kataDitemukan.length > 0) {
+        alert("Terdapat Kata yang Dilarang!");
+        return;
+      }
+      setLoading(true);
       const res = await searchMovies(search);
+      if (res.length === 0) {
+        setMyErrors("Film Tidak Ditemukan!");
+        return;
+      }
       setSearchReturn(res);
-      setLoading(false); // Sembunyikan loading setelah selesai pencarian
+      setLoading(false);
+      return;
     }
   };
 
@@ -47,7 +63,10 @@ function App() {
     <>
       <div className="m-5 p-5 bg-slate-700 rounded-md text-white">
         <div className="flex justify-center">
-          <button onClick={toGetMovie} className="text-4xl font-bold">
+          <button
+            onClick={toGetMovie}
+            className="text-2xl md:text-4xl font-bold"
+          >
             My Movies List
           </button>
         </div>
@@ -66,15 +85,21 @@ function App() {
             Search!
           </button>
         </div>
-        <div>
-          {loading ? ( // Tampilkan loading jika loading true
-            <Loading />
-          ) : searchReturn.length !== 0 ? (
-            <MoviesList moviesList={searchReturn} />
-          ) : (
-            <MoviesList moviesList={moviesList} />
-          )}
-        </div>
+        {myErrors == "" ? (
+          <div>
+            {loading ? ( // Tampilkan loading jika loading true
+              <Loading />
+            ) : searchReturn.length !== 0 ? (
+              <MoviesList moviesList={searchReturn} />
+            ) : (
+              <MoviesList moviesList={moviesList} />
+            )}
+          </div>
+        ) : (
+          <div className="flex justify-center items-center my-20">
+            <h1 className="font-medium text-xl">{myErrors}</h1>
+          </div>
+        )}
       </div>
       {loading ? (
         <div></div>

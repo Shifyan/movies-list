@@ -41,9 +41,9 @@ export default function MoviesCard({ image, title, year, genre_id }) {
             />
           </a>
         </div>
-        <div className="mx-3 mt-5 mb-3">
+        <div className="mx-3 mt-5 mb-3 text-sm md:text-base">
           <div className="flex justify-center text-center my-5">
-            <a href="#" className="font-medium text-xl underline">
+            <a href="#" className="font-medium text-lg md:text-xl underline">
               {title}
             </a>
           </div>
